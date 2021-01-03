@@ -10,11 +10,13 @@
         <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
         <script src="https://unpkg.com/@editvr/aframe-dialog-popup-component@1.7.2/dist/aframe-dialog-popup-component.min.js"></script>
+        <script src="https://unpkg.com/super-hands@3.0.0/dist/super-hands.min.js"></script>
+        <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
     </head>
 
     <body>
 
-        <a-scene physics="debug: true">
+        <a-scene inspector-plugin-recast>
 
             <a-mixin id="rotation" animation="property: rotation; loop: true; from:  0 0 0; to: 0 360 0; dur: 20000; easing: linear;"></a-mixin>
 
@@ -34,11 +36,34 @@
                 <img id="moon-texture" src="assets/moon_texture.jpg">
                 <img id="galaxy-texture" src="assets/galaxy1.jpg">  
                 <img id="galaxy-texture1" src="assets/galaxy.jpg">  
+                <img id="footstep" src="assets/footstep.png"> 
             </a-assets>      
 
-            <a-camera position="0 2 -8"><a-cursor></a-cursor></a-camera>
-            <a-entity id="dialog" active dialog-popup="title: My Title; body: My Body" position="0 1 -10" titleColor="yellow"></a-entity>
+
+            <a-entity id="cam-position"
+                  position="0 1 -8"
+                  movement-controls="controls: checkpoint" 
+                  checkpoint-controls="mode: animate;animateSpeed:10">
+                <a-camera>
+                    <a-cursor></a-cursor>
+                </a-camera>
+            </a-entity>
+
+          <a-entity id="foot">
+            <a-image src="#footstep" position="7.5 0.1 -5" rotation="-90 -90 0" checkpoint="offset:0 1 0" scale="1 1 1"></a-image>
+            <a-image src="#footstep" position="7.5 0.1 5" rotation="-90 -90 0" checkpoint="offset:0 1 0" scale="1 1 1"></a-image>
+            <a-image src="#footstep" position="-7.5 0.1 5" rotation="-90 90 0" checkpoint="offset:0 1 0" scale="1 1 1"></a-image>
+            <a-image src="#footstep" position="-7.5 0.1 -5" rotation="-90 90 0" checkpoint="offset:0 1 0" scale="1 1 1"></a-image>
+            <a-image src="#footstep" position="-5 0.1 -7.5" rotation="-90 0 0" checkpoint="offset:0 1 0" scale="1 1 1"></a-image>
+            <a-image src="#footstep" position="5 0.1 -7.5" rotation="-90 0 0" checkpoint="offset:0 1 0" scale="1 1 1"></a-image>
+            <a-image src="#footstep" position="5 0.1 7.5" rotation="-90 180 0" checkpoint="offset:0 1 0" scale="1 1 1"></a-image>
+            <a-image src="#footstep" position="-5 0.1 7.5" rotation="-90 180 0" checkpoint="offset:0 1 0" scale="1 1 1"></a-image>
+            <a-image src="#footstep" position="0 0.1 -2.5" rotation="-90 180 0" checkpoint="offset:0 1 0" scale="1 1 1"></a-image>
+            <a-image src="#footstep" position="0 0.1 2.5" rotation="-90 0 0" checkpoint="offset:0 1 0" scale="1 1 1"></a-image>
+            <a-image src="#footstep" position="0 0.1 12" rotation="-90 180 0" checkpoint="offset:0 1 0" scale="1 1 1"></a-image>
             
+
+        </a-entity>
 
             <a-entity id="basic-light" light="type: ambient; color: #BBB"></a-entity>
             <a-sky color="black"></a-sky>
@@ -132,8 +157,7 @@
                     <a-box position="4 0 2.5" rotation="0 90 0" scale="5 5 0.01" color="grey"></a-box>
                     <a-box position="-4 0 2.5" rotation="0 90 0" scale="5 5 0.01" color="grey"></a-box>
                 </a-entity>
-                <a-ocean position="0 2.5 14.8" rotation="0 180 0" color="black" depth="4" width="7.97" amplitude="0" amplitude-variance="0.1" speed="1.5" speed-variance="10" opacity="1" density="5"></a-ocean>
-                <a-sphere id="tele-orb" position="0 1 15" radius="0.5" src="#galaxy-texture1"></a-sphere>
+                <a-ocean id="warp-gate" position="0 2.5 14.5" rotation="0 180 0" color="black" depth="4" width="7.97" amplitude="0" amplitude-variance="0.1" speed="1.5" speed-variance="10" opacity="1" density="5"></a-ocean>
 
                 <!-- tele room door-->
                 <a-box position="-5.7 2.5 10" color="grey" scale = "8.6 5 0.01"></a-box>
@@ -233,9 +257,9 @@
     </body>
     <script>
     document
-      .querySelector("#tele-orb")
+      .querySelector("#warp-gate")
       .addEventListener("click", e => {
-        location.href = "test.html";
+        location.href = "tower.html";
       });
     </script>
 </html>
