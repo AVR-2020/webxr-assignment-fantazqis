@@ -31,6 +31,8 @@
                 <a-asset-item id="asteroids" response-type="arraybuffer" src="https://cdn.glitch.com/d558c128-2ed0-4284-a0da-4d18b9163ad6%2Fasteroides.glb?1541106805090"></a-asset-item>
             </a-assets>
 
+            <a-entity sound="src:assets/sound/galaxy.mp3;loop: true;autoplay: true;volume: 0.5;refDistance:2" id="mp3player"></a-entity>
+
             <a-entity id="basic-light" light="type: ambient; color: #BBB"></a-entity>
 
             <a-camera position="-5 5 20"><a-cursor></a-cursor></a-camera>
@@ -125,9 +127,9 @@
     </body>
     <script>
         document
-          .querySelector("#coba")
+          .querySelector("#earth")
           .addEventListener("click", e => {
-            location.href = "index.html";
+            location.href = "tower.html";
           });
     </script>
 
