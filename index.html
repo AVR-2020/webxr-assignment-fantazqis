@@ -9,6 +9,9 @@
         <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
         <script src="https://unpkg.com/super-hands@3.0.0/dist/super-hands.min.js"></script>
+        <script src="https://unpkg.com/aframe-animation-component@^5.1.2/dist/aframe-animation-component.min.js"></script>
+        <script src="js/start-button.js"></script>
+        <script src="js/pause-button.js"></script>
     </head>
 
     <body>
@@ -17,7 +20,7 @@
 
             <a-mixin id="rotation" animation="property: rotation; loop: true; from:  0 0 0; to: 0 360 0; dur: 20000; easing: linear;"></a-mixin>
 
-            <a-mixin id="orbit" animation="property: rotation; loop: true; to: 0 360 0; dur: 40000; easing: linear;"></a-mixin>
+            <a-mixin id="orbit" animation="property: rotation; loop: true; to: 0 360 0; dur: 40000; easing: linear; pauseEvents: pauseOrbit; resumeEvents: startOrbit"></a-mixin>
 
             <a-assets>
                 <img id="sun-texture" src="assets/sun_texture.jpg">
@@ -167,7 +170,7 @@
 
                 <a-cylinder position="0 0 0" src="#galaxy-texture" scale="1.8 2 1.8"></a-cylinder>
                 <a-cylinder position="0 0 0" color="black" scale="1.9 1.9 1.9"></a-cylinder>    
-                <a-box id="roof" position="0 5 0" rotation="90 0 0" scale = "20 20 0.01"></a-box>
+                <a-box id="roof" position="0 5 0" rotation="90 0 0" scale = "30 30 0.01"></a-box>
                 <a-box position="10 2.5 0" rotation="0 90 0" color="grey" scale = "20 5 0.01"></a-box>
                 <a-box position="-10 2.5 0" rotation="0 90 0" color="grey" scale = "20 5 0.01"></a-box>
 
@@ -292,6 +295,14 @@
 
             </a-entity>
 
+            
+                <a-sphere pause-button class="clickable" color="red" position="1 2 0" scale="0.2 0.2 0.2">
+                </a-sphere>
+
+                <a-sphere start-button class="clickable" color="green" position="-1 2 0" scale="0.2 0.2 0.2">
+                </a-sphere>
+            
+
             <a-entity id="table-planet" position="0 1.1 0" scale="0.04 0.04 0.04">
                 <a-entity geometry="primitive: torus; radius: 3; radiusTubular: 0.01;segmentsTubular: 50" material="color: #FFFFFF;opacity: 0.3" rotation="90 0 0" scale="2 2 0.1"></a-entity>
                 <a-entity geometry="primitive: torus; radius: 4.24; radiusTubular: 0.01;segmentsTubular: 50" material="color: #FFFFFF;opacity: 0.3" rotation="90 0 0" scale="2 2 0.1"></a-entity>
@@ -305,34 +316,34 @@
                 <!-- Planet dan Matahari -->
                 <a-sphere id="sun" position="0 0 0" radius="4" src="#sun-texture" mixin="rotation" light="type: point" material="shader: flat;"></a-sphere>
 
-                <a-entity id="orbit-mercury" mixin="orbit" animation="dur: 20000;">
+                <a-entity id="orbit-mercury" mixin="orbit" class="orbits" animation="dur: 20000;">
                     <a-sphere id="mercury" position="0 0 6" radius=".4" src="#mercury-texture" mixin="orbit"></a-sphere>
                 </a-entity>
 
-                <a-entity id="orbit-venus" mixin="orbit">
+                <a-entity id="orbit-venus" mixin="orbit" class="orbits">
                     <a-sphere id="venus" position="0 0 8.5" radius=".4" src="#venus-texture" mixin="rotation"></a-sphere>
                 </a-entity>
 
-                <a-entity id="orbit-earth" mixin="orbit" animation="dur: 30000;">
+                <a-entity id="orbit-earth" mixin="orbit" class="orbits" animation="dur: 30000;">
                     <a-entity id="earth-and-moon" position="0 0 10.5">
                         <a-entity id="earth-container">
                             <a-sphere position="0 0 0" radius=".5" id="earth" src="#earth-texture" mixin="rotation"></a-sphere>
-                            <a-entity id="moon-container" mixin="orbit">
+                            <a-entity id="moon-container" mixin="orbit" class="orbits">
                                 <a-sphere position="-1 0 0" radius=".10" id="moon" src="#moon-texture"></a-sphere>
                             </a-entity>
                         </a-entity>
                     </a-entity>
                 </a-entity>
 
-                <a-entity id="orbit-mars" mixin="orbit">
+                <a-entity id="orbit-mars" mixin="orbit" class="orbits">
                     <a-sphere id="mars" position="0 0 12.5" radius=".4" src="#mars-texture" mixin="rotation"></a-sphere>
                 </a-entity>
 
-                <a-entity id="orbit-jupiter" mixin="orbit" animation="dur: 90000;">
+                <a-entity id="orbit-jupiter" mixin="orbit" class="orbits" animation="dur: 90000;">
                     <a-sphere id="jupiter" position="0 0 24" radius="2.5" src="#jupiter-texture" mixin="rotation"></a-sphere>
                 </a-entity>
 
-                <a-entity id="orbit-saturn" mixin="orbit">
+                <a-entity id="orbit-saturn" mixin="orbit" class="orbits">
                     <a-entity id="saturn-container" position="0 0 31">
                         <a-sphere radius="1.8" id="saturn" src="#saturn-texture" mixin="rotation"></a-sphere>
                         <a-entity id="saturn-ring-1" geometry="primitive: torus; radius: 3.2; radiusTubular: 0.1;segmentsTubular: 50"
@@ -342,7 +353,7 @@
                     </a-entity>
                 </a-entity>
 
-                <a-entity id="orbit-uranus" mixin="orbit" animation="dur: 70000;">
+                <a-entity id="orbit-uranus" mixin="orbit" class="orbits" animation="dur: 70000;">
                     <a-entity id="uranus-container" position="0 0 36">
                         <a-sphere id="uranus" radius=".75" src="#uranus-texture" mixin="rotation"></a-sphere>
                         <a-entity id="uranus-ring" geometry="primitive: torus; radius: 1.5; radiusTubular: 0.01;segmentsTubular: 50"
@@ -350,7 +361,7 @@
                     </a-entity>
                 </a-entity>
 
-                <a-entity id="orbit-neptune" mixin="orbit" animation="dur: 35000;">
+                <a-entity id="orbit-neptune" mixin="orbit" class="orbits" animation="dur: 35000;">
                     <a-entity id="neptune-container" position="0 0 40">
                         <a-sphere id="neptune" radius="1" src="#neptune-texture" mixin="rotation"></a-sphere>
                         <a-entity id="neptune-ring-1" geometry="primitive: torus; radius: 2; radiusTubular: 0.01;segmentsTubular: 50"
